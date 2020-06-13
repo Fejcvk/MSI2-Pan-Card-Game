@@ -7,6 +7,11 @@ class Card:
     def __init__(self, value, color):
         self.value = value
         self.color = color
+        self.string_value = card_values[self.value]
 
-    def print(self):
-        print(f"{card_colors.get(self.color)}|{card_values.get(self.value)}")
+    def print(self, show_colors = True):
+
+        if show_colors:
+            print(f"{card_colors.get(self.color)}|{card_values.get(self.value)}", end=' ')
+        else:
+            print(f"{card_values.get(self.value)}", end=' ')
