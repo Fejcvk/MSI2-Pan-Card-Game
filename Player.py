@@ -54,8 +54,8 @@ class Player:
 
         if len(pile) > 1:
             number_of_cards_to_draw = 3
-            if len(pile) < number_of_cards_to_draw:
-                number_of_cards_to_draw = len(pile)
+            if len(pile)-1 < number_of_cards_to_draw:
+                number_of_cards_to_draw = len(pile)-1
             draw_move = Move(action_type=ActionType.DRAW, number_of_actionable_cards=number_of_cards_to_draw,
                              move_id=move_id)
             move_id += 1

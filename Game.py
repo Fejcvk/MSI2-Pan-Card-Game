@@ -1,13 +1,14 @@
 from Player import Player
 from Card import Card, card_values
+from UctPlayer import UctPlayer
 import random
 
 
 class Game:
 
     def __init__(self):
-        self.p1 = Player(id=1)
-        self.p2 = Player(id=2)
+        self.p1 = UctPlayer(id=1)
+        self.p2 = UctPlayer(id=2)
         self.amount_of_cards = 24
         self.number_of_players = 2
         self.number_of_card_colors = 4
@@ -89,9 +90,10 @@ class Game:
         print("*********START OF THE GAME*****************")
         starting_player = self.select_starting_player()
         starting_player.move(pile=self.card_pile, is_starting_move=True)
+        self.p1.get_state()
+        self.p2.get_state()
         self.list_pile()
         next_player = self.get_next_player(starting_player.id)
-
         while not self.is_game_finished():
             print(
                 f"***************************** Player {next_player.id} move starts now *****************************")
