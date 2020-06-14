@@ -20,7 +20,7 @@ class UctPlayer(Player):
 
     def move(self, pile: [Card], is_starting_move=False):
         if is_starting_move:
-            super().move(pile, is_starting_move)
+            return super().move(pile, is_starting_move)
         list_of_moves = super().list_possible_moves(pile=pile)
         if not self.make_random_move:
             list_of_states_after_moves = self.make_list_of_states_after_moves(pile, list_of_moves)
@@ -31,6 +31,7 @@ class UctPlayer(Player):
                     self.visited_states.append(state)
                     self.number_of_visits.append(1)
                     self.visited_states_in_current_game.append(state)
+                    self.number_of_successes.append(0)
                     self.number_of_moves += 1
                     return super().execute_move(move=list_of_moves[idx], pile=pile)
                 else:
@@ -40,7 +41,7 @@ class UctPlayer(Player):
             max_uct_value_idx = uct_moves_values.index(max_uct_value)
             self.number_of_visits[max_uct_value_idx] += 1
             self.number_of_moves += 1
-            self.visited_states_in_current_game += 1
+            self.visited_states_in_current_game.append(list_of_states_after_moves[max_uct_value_idx])
             return super().execute_move(move=list_of_moves[max_uct_value_idx], pile=pile)
         else:
             super().execute_move(move=random.choice(list_of_moves), pile=pile)
@@ -118,3 +119,12 @@ class UctPlayer(Player):
                            number_of_aces, number_of_nines_on_pile=1, number_of_tens_on_pile=0,
                            number_of_jacks_on_pile=0, number_of_queens_on_pile=0, number_of_kings_on_pile=0,
                            number_of_aces_on_pile=0)
+
+    def update_graphs_after_result(self, win: bool):
+        for state in self.visited_states_in_current_game:
+            idx = self.visited_states.index(state)
+            if win:
+                self.number_of_successes[idx] += 1
+        self.visited_states_in_current_game = []
+        self.cards = []
+        self.make_random_move = False

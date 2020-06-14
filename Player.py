@@ -1,6 +1,6 @@
 from Card import Card, card_values
 from Move import Move, ActionType
-
+PRINT = False
 inverted_card_values = {v: k for k, v in card_values.items()}
 
 
@@ -14,24 +14,28 @@ class Player:
         self.cards.append(card)
 
     def list_cards(self, show_colors):
-        for card in self.cards:
-            card.print(show_colors)
-        print('\n')
+        if PRINT:
+            for card in self.cards:
+                card.print(show_colors)
+            print('\n')
 
     def move(self, pile: [Card], is_starting_move=False):
         if is_starting_move:
             self.throw_card(pile=pile, card_value=9, card_color=0)
         else:
             card_on_top = pile[-1]
-            print(f"Card on top of pile = {card_on_top.string_value}")
-            print("Your cards are")
+            if PRINT:
+                print(f"Card on top of pile = {card_on_top.string_value}")
+                print("Your cards are")
             self.list_cards(show_colors=False)
 
             list_of_moves = self.list_possible_moves(pile=pile)
-            print("Which move you want to make")
+            if PRINT:
+                print("Which move you want to make")
             move_to_make_id = int(input())
             move_to_make = next((m for m in list_of_moves if m.move_id == move_to_make_id), None)
-            print(f"Executing move {move_to_make_id}")
+            if PRINT:
+                print(f"Executing move {move_to_make_id}")
             self.execute_move(move=move_to_make, pile=pile)
 
     def execute_move(self, move: Move, pile: [Card]):
@@ -102,7 +106,8 @@ class Player:
                                 card.value == card_to_throw.value and card_to_throw.color == card.color))
             pile.append(player_card)
             self.cards.remove(player_card)
-            print(f"Player {self.id} thrown {player_card.color}|{player_card.value} onto the pile")
+            if PRINT:
+                print(f"Player {self.id} thrown {player_card.color}|{player_card.value} onto the pile")
 
         else:
             for i in range(0, number_of_cards_to_throw):
@@ -111,5 +116,6 @@ class Player:
                         pile.append(card)
                         card_to_remove = card
                         self.cards.remove(card_to_remove)
-                        print(f"Player {self.id} thrown {card_to_remove.color}|{card_to_remove.value} onto the pile")
+                        if PRINT:
+                            print(f"Player {self.id} thrown {card_to_remove.color}|{card_to_remove.value} onto the pile")
                         break
