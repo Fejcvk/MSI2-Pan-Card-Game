@@ -3,6 +3,7 @@ from Move import Move, ActionType
 
 inverted_card_values = {v: k for k, v in card_values.items()}
 
+
 class Player:
 
     def __init__(self, id: int):
@@ -35,69 +36,70 @@ class Player:
 
     def execute_move(self, move: Move, pile: [Card]):
         if move.action_type == ActionType.DRAW:
-            self.draw_cards(pile, number_of_cards_to_draw = move.number_of_actionable_cards)
+            self.draw_cards(pile, number_of_cards_to_draw=move.number_of_actionable_cards)
         elif move.action_type == ActionType.THROW:
             self.throw_card(pile=pile, card_value=inverted_card_values[move.card_value],
                             number_of_cards_to_throw=move.number_of_actionable_cards)
 
-    def list_possible_moves(self, pile:[Card]) -> [Move]:
-
-        occurences = {}
+    def list_possible_moves(self, pile: [Card]) -> [Move]:
+        occurrences = {}
         move_id = 0
 
         for card in self.cards:
-            if card.string_value in occurences:
-                occurences[card.string_value] += 1
+            if card.string_value in occurrences:
+                occurrences[card.string_value] += 1
             else:
-                occurences[card.string_value] = 1
-        possbile_moves = []
+                occurrences[card.string_value] = 1
+        possible_moves = []
 
         if len(pile) > 1:
             number_of_cards_to_draw = 3
             if len(pile) < number_of_cards_to_draw:
                 number_of_cards_to_draw = len(pile)
-            draw_move = Move(action_type=ActionType.DRAW, number_of_actionable_cards=number_of_cards_to_draw, move_id=move_id)
-            move_id +=1
-            possbile_moves.append(draw_move)
+            draw_move = Move(action_type=ActionType.DRAW, number_of_actionable_cards=number_of_cards_to_draw,
+                             move_id=move_id)
+            move_id += 1
+            possible_moves.append(draw_move)
 
-        for k,v in occurences.items():
-            if not self.can_throw_card_on_pile(card_value = inverted_card_values[k], pile = pile):
+        for k, v in occurrences.items():
+            if not self.can_throw_card_on_pile(card_value=inverted_card_values[k], pile=pile):
                 continue
             if v >= 1:
-            #throw one card
+                # throw one card
                 move = Move(action_type=ActionType.THROW, number_of_actionable_cards=1, card_value=k, move_id=move_id)
                 move_id += 1
-                possbile_moves.append(move)
+                possible_moves.append(move)
             if v >= 3:
-            #throw three cards
+                # throw three cards
                 move = Move(action_type=ActionType.THROW, number_of_actionable_cards=3, card_value=k, move_id=move_id)
                 move_id += 1
-                possbile_moves.append(move)
+                possible_moves.append(move)
             if v == 4:
                 move = Move(action_type=ActionType.THROW, number_of_actionable_cards=4, card_value=k, move_id=move_id)
                 move_id += 1
-                possbile_moves.append(move)
+                possible_moves.append(move)
 
-        for move in possbile_moves:
+        for move in possible_moves:
             move.print()
 
-        return possbile_moves
+        return possible_moves
 
-    def can_throw_card_on_pile(self,card_value: int, pile: [Card]) -> bool:
+    def can_throw_card_on_pile(self, card_value: int, pile: [Card]) -> bool:
         card_on_top = pile[-1]
         if card_value >= card_on_top.value:
             return True
         return False
 
-    def draw_cards(self, pile:[Card], number_of_cards_to_draw):
-        for i in range(0,number_of_cards_to_draw):
+    def draw_cards(self, pile: [Card], number_of_cards_to_draw):
+        for i in range(0, number_of_cards_to_draw):
             card_to_draw = pile.pop()
             self.cards.append(card_to_draw)
 
     def throw_card(self, pile: [], card_value: int, number_of_cards_to_throw: int = None, card_color: int = None):
         if card_color is not None:
             card_to_throw = Card(color=card_color, value=card_value)
-            player_card = next((card for card in self.cards if card.value == card_to_throw.value and card_to_throw.color == card.color))
+            player_card = next((card for card in self.cards if
+                                card.value == card_to_throw.value and card_to_throw.color == card.color))
             pile.append(player_card)
             self.cards.remove(player_card)
             print(f"Player {self.id} thrown {player_card.color}|{player_card.value} onto the pile")

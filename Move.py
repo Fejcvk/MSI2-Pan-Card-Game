@@ -14,4 +14,5 @@ class Move:
         self.number_of_actionable_cards = number_of_actionable_cards
 
     def print(self):
-        print(f"{self.move_id}.Move kind {self.action_type}, number of actionable cards = {self.number_of_actionable_cards}, actionable card value = {self.card_value}")
+        print(
+            f"{self.move_id}.Move kind {self.action_type}, number of actionable cards = {self.number_of_actionable_cards}, actionable card value = {self.card_value}")

@@ -67,7 +67,7 @@ class Game:
             card.print()
         print('\n')
 
-    def get_next_player (self, previous_player_id: int) -> Player:
+    def get_next_player(self, previous_player_id: int) -> Player:
         if previous_player_id == 1:
             return self.p2
         else:
@@ -93,7 +93,8 @@ class Game:
         next_player = self.get_next_player(starting_player.id)
 
         while not self.is_game_finished():
-            print(f"***************************** Player {next_player.id} move starts now *****************************")
+            print(
+                f"***************************** Player {next_player.id} move starts now *****************************")
             next_player.move(pile=self.card_pile)
             self.list_pile()
             next_player = self.get_next_player(next_player.id)
