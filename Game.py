@@ -100,7 +100,8 @@ class Game:
             return self.p1
     # Return player that won
     def start_game(self):
-        for i in range(10000):
+        number_of_draws = 0
+        for i in range(100000):
             if i % 100 == 0:
                 print(i)
             # print("*********START OF THE GAME*****************")
@@ -110,16 +111,29 @@ class Game:
             self.p2.get_state()
             self.list_pile()
             next_player = self.get_next_player(starting_player.id)
+            number_of_moves = 0
+            draw = False
             while not self.is_game_finished():
                 if PRINT:
                     print(f"***************************** Player {next_player.id} move starts now *****************************")
                 next_player.move(pile=self.card_pile)
                 self.list_pile()
                 next_player = self.get_next_player(next_player.id)
-            winner = self.get_winner()
-            winner.update_graphs_after_result(True)
-            looser = self.get_looser()
-            looser.update_graphs_after_result(False)
+                number_of_moves += 1
+                if number_of_moves > 5000:
+                    draw = True
+                    number_of_draws += 1
+                    if number_of_draws % 100 == 0:
+                        print(str(number_of_draws) + " draws")
+                    break
+            if draw:
+                self.p1.update_graphs_after_result(False)
+                self.p2.update_graphs_after_result(False)
+            else:
+                winner = self.get_winner()
+                winner.update_graphs_after_result(True)
+                looser = self.get_looser()
+                looser.update_graphs_after_result(False)
             # print(f"Game won by Player{winner.id}")
             self.create_new_game()
         with open('player_one', 'wb') as player_one_file:
