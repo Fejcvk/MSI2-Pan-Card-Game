@@ -108,7 +108,7 @@ class Game:
         number_of_draws = 0
         player1_wins = 0
         player2_wins = 0
-        for i in range(50):
+        for i in range(1000):
             if i % 100 == 0:
                 print(i)
             # print("*********START OF THE GAME*****************")
@@ -130,7 +130,7 @@ class Game:
                 if number_of_moves > 5000:
                     draw = True
                     number_of_draws += 1
-                    if number_of_draws % 100 == 0:
+                    if number_of_draws % 1 == 0:
                         print(str(number_of_draws) + " draws")
                     break
             if draw:
@@ -152,20 +152,23 @@ class Game:
         # with open('player_two', 'wb') as player_two_file:
         #     pickle.dump(self.p2, player_two_file)
         print("THE END")
-        print("Player " + str(self.p1.id) + " wins: " + str(player1_wins))
-        print("Player " + str(self.p2.id) + " wins: " + str(player2_wins))
-        print("Number of draws: " + str(number_of_draws))
-
+        output_file = open('result.txt', 'a+')
+        output_file.write("Game between player " + str(self.p1.id) + " and " + str(self.p2.id) + "\n")
+        output_file.write("Player " + str(self.p1.id) + " wins: " + str(player1_wins) + "\n")
+        output_file.write("Player " + str(self.p2.id) + " wins: " + str(player2_wins) + "\n")
+        output_file.write("Number of draws: " + str(number_of_draws) + "\n")
+        output_file.write("\n")
+        output_file.close()
 
     def play_tournament(self):
+
         player1 = pd.read_pickle('player_one')
         player2 = pd.read_pickle('player_two')
-        player3 = UctPlayer(id=3)
-        player4 = UctPlayer(id=4)
-        player_list = [player4, player3, player1, player2]
+        player_list = [player1, player2]
         # TODO dodać graczy odpowiednich
         for player1 in player_list:
             for player2 in player_list:
                 if player1 != player2:
+                    print("a")
                     self.start_game(player1, player2)
 
