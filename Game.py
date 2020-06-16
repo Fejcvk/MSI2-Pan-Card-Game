@@ -3,6 +3,7 @@ from Card import Card, card_values
 from UctPlayer import UctPlayer
 import random
 import pickle
+import pandas as pd
 
 PRINT = False
 
@@ -99,9 +100,15 @@ class Game:
         else:
             return self.p1
     # Return player that won
-    def start_game(self):
+
+    def start_game(self, player1, player2):
+        self.p1 = player1
+        self.p2 = player2
+        self.create_new_game()
         number_of_draws = 0
-        for i in range(100000):
+        player1_wins = 0
+        player2_wins = 0
+        for i in range(50):
             if i % 100 == 0:
                 print(i)
             # print("*********START OF THE GAME*****************")
@@ -131,13 +138,34 @@ class Game:
                 self.p2.update_graphs_after_result(False)
             else:
                 winner = self.get_winner()
+                if winner == player1:
+                    player1_wins += 1
+                else:
+                    player2_wins += 1
                 winner.update_graphs_after_result(True)
                 looser = self.get_looser()
                 looser.update_graphs_after_result(False)
             # print(f"Game won by Player{winner.id}")
             self.create_new_game()
-        with open('player_one', 'wb') as player_one_file:
-            pickle.dump(self.p1, player_one_file)
-        with open('player_two', 'wb') as player_two_file:
-            pickle.dump(self.p2, player_two_file)
+        # with open('player_one', 'wb') as player_one_file:
+        #     pickle.dump(self.p1, player_one_file)
+        # with open('player_two', 'wb') as player_two_file:
+        #     pickle.dump(self.p2, player_two_file)
         print("THE END")
+        print("Player " + str(self.p1.id) + " wins: " + str(player1_wins))
+        print("Player " + str(self.p2.id) + " wins: " + str(player2_wins))
+        print("Number of draws: " + str(number_of_draws))
+
+
+    def play_tournament(self):
+        player1 = pd.read_pickle('player_one')
+        player2 = pd.read_pickle('player_two')
+        player3 = UctPlayer(id=3)
+        player4 = UctPlayer(id=4)
+        player_list = [player4, player3, player1, player2]
+        # TODO dodać graczy odpowiednich
+        for player1 in player_list:
+            for player2 in player_list:
+                if player1 != player2:
+                    self.start_game(player1, player2)
+
