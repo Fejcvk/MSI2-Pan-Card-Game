@@ -1,8 +1,11 @@
+from datetime import datetime
+
 from Player import Player
 from Card import Card, card_values
 from UctPlayer import UctPlayer
 import random
 import pickle
+import pandas as pd
 
 PRINT = False
 
@@ -99,11 +102,26 @@ class Game:
         else:
             return self.p1
     # Return player that won
+
     def start_game(self):
+        p1_victories = 0
+        p2_victories = 0
+        # self.p1 = pd.read_pickle('Agents/player_one')
+        # self.create_new_game()
+        first_time = datetime.now()
         number_of_draws = 0
-        for i in range(100000):
-            if i % 100 == 0:
-                print(i)
+        for i in range(20000):
+            if i % 1000 == 0:
+                print(p1_victories)
+                print(p2_victories)
+                second_time = datetime.now()
+                print(str(i) + ", time: " + str((second_time - first_time).seconds))
+                with open('player_one_lim', 'wb') as player_one_file:
+                    pickle.dump(self.p1, player_one_file)
+                with open('player_two_lim', 'wb') as player_two_file:
+                    pickle.dump(self.p2, player_two_file)
+                first_time = datetime.now()
+
             # print("*********START OF THE GAME*****************")
             starting_player = self.select_starting_player()
             starting_player.move(pile=self.card_pile, is_starting_move=True)
@@ -131,13 +149,19 @@ class Game:
                 self.p2.update_graphs_after_result(False)
             else:
                 winner = self.get_winner()
+                if winner.id == self.p1.id:
+                    p1_victories += 1
+                else:
+                    p2_victories += 1
                 winner.update_graphs_after_result(True)
                 looser = self.get_looser()
                 looser.update_graphs_after_result(False)
             # print(f"Game won by Player{winner.id}")
             self.create_new_game()
-        with open('player_one', 'wb') as player_one_file:
-            pickle.dump(self.p1, player_one_file)
-        with open('player_two', 'wb') as player_two_file:
-            pickle.dump(self.p2, player_two_file)
+        print(p1_victories)
+        print(p2_victories)
+        # with open('player_one', 'rb') as player_one_file:
+        #     pickle.dump(self.p1, player_one_file)
+        # with open('player_two', 'rb') as player_two_file:
+        #     pickle.dump(self.p2, player_two_file)
         print("THE END")

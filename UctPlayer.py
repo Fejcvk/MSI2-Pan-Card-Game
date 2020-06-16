@@ -17,12 +17,13 @@ class UctPlayer(Player):
         self.visited_states_in_current_game = []
         self.number_of_moves = 0
         self.make_random_move = False
+        self.number_of_moves_in_current_game = 0
 
     def move(self, pile: [Card], is_starting_move=False):
         if is_starting_move:
             return super().move(pile, is_starting_move)
         list_of_moves = super().list_possible_moves(pile=pile)
-        if not self.make_random_move:
+        if not self.make_random_move and self.number_of_moves_in_current_game < 10:
             list_of_states_after_moves = self.make_list_of_states_after_moves(pile, list_of_moves)
             uct_moves_values = []
             for idx, state in enumerate(list_of_states_after_moves):
