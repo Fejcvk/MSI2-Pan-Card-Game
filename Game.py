@@ -1,5 +1,6 @@
 from Player import Player
 from Card import Card, card_values
+from UCB1Player import UCB1Player
 from UctPlayer import UctPlayer
 import random
 import pickle
@@ -10,7 +11,8 @@ class Game:
 
     def __init__(self):
         self.p1 = UctPlayer(id=1)
-        self.p2 = UctPlayer(id=2)
+        self.p2 = UCB1Player(id=2, pulls=[float(random.randrange(0,10)/10)], values=[])
+        self.p2.initialize(1)
         self.amount_of_cards = 24
         self.number_of_players = 2
         self.number_of_card_colors = 4
@@ -98,10 +100,11 @@ class Game:
             return self.p2
         else:
             return self.p1
+
     # Return player that won
     def start_game(self):
         number_of_draws = 0
-        for i in range(100000):
+        for i in range(10000):
             if i % 100 == 0:
                 print(i)
             # print("*********START OF THE GAME*****************")
@@ -136,8 +139,8 @@ class Game:
                 looser.update_graphs_after_result(False)
             # print(f"Game won by Player{winner.id}")
             self.create_new_game()
-        with open('player_one', 'wb') as player_one_file:
+        with open('player_one_ucb', 'wb') as player_one_file:
             pickle.dump(self.p1, player_one_file)
-        with open('player_two', 'wb') as player_two_file:
+        with open('player_two_ucb', 'wb') as player_two_file:
             pickle.dump(self.p2, player_two_file)
         print("THE END")
