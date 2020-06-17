@@ -23,7 +23,7 @@ class UctPlayer(Player):
         if is_starting_move:
             return super().move(pile, is_starting_move)
         list_of_moves = super().list_possible_moves(pile=pile)
-        if not self.make_random_move and self.number_of_moves_in_current_game < 10:
+        if not self.make_random_move:
             list_of_states_after_moves = self.make_list_of_states_after_moves(pile, list_of_moves)
             uct_moves_values = []
             for idx, state in enumerate(list_of_states_after_moves):
