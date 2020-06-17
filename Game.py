@@ -106,20 +106,21 @@ class Game:
     def start_game(self):
         p1_victories = 0
         p2_victories = 0
-        # self.p1 = pd.read_pickle('Agents/player_one')
-        # self.create_new_game()
+        self.p1 = pd.read_pickle('player_one_lim')
+        self.p2 = pd.read_pickle("player_two")
+        self.create_new_game()
         first_time = datetime.now()
         number_of_draws = 0
-        for i in range(20000):
-            if i % 1000 == 0:
+        for i in range(1000):
+            if i % 10 == 0:
                 print(p1_victories)
                 print(p2_victories)
                 second_time = datetime.now()
                 print(str(i) + ", time: " + str((second_time - first_time).seconds))
-                with open('player_one_lim', 'wb') as player_one_file:
-                    pickle.dump(self.p1, player_one_file)
-                with open('player_two_lim', 'wb') as player_two_file:
-                    pickle.dump(self.p2, player_two_file)
+                # with open('player_one_lim', 'wb') as player_one_file:
+                #     pickle.dump(self.p1, player_one_file)
+                # with open('player_two_lim', 'wb') as player_two_file:
+                #     pickle.dump(self.p2, player_two_file)
                 first_time = datetime.now()
 
             # print("*********START OF THE GAME*****************")
@@ -138,10 +139,10 @@ class Game:
                 self.list_pile()
                 next_player = self.get_next_player(next_player.id)
                 number_of_moves += 1
-                if number_of_moves > 5000:
+                if number_of_moves > 500:
                     draw = True
                     number_of_draws += 1
-                    if number_of_draws % 100 == 0:
+                    if number_of_draws % 1 == 0:
                         print(str(number_of_draws) + " draws")
                     break
             if draw:
