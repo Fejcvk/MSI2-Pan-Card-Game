@@ -121,10 +121,10 @@ class UctPlayer(Player):
                            number_of_aces_on_pile=0)
 
     def update_graphs_after_result(self, win: bool):
-        for state in self.visited_states_in_current_game:
-            idx = self.visited_states.index(state)
-            if win:
-                self.number_of_successes[idx] += 1
+        # for state in self.visited_states_in_current_game:
+        #     idx = self.visited_states.index(state)
+        #     if win:
+        #         self.number_of_successes[idx] += 1
         self.visited_states_in_current_game = []
         self.cards = []
         self.make_random_move = False

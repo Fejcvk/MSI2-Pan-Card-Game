@@ -108,8 +108,8 @@ class Game:
         number_of_draws = 0
         player1_wins = 0
         player2_wins = 0
-        for i in range(1000):
-            if i % 100 == 0:
+        for i in range(50):
+            if i % 25 == 0:
                 print(i)
             # print("*********START OF THE GAME*****************")
             starting_player = self.select_starting_player()
@@ -127,11 +127,9 @@ class Game:
                 self.list_pile()
                 next_player = self.get_next_player(next_player.id)
                 number_of_moves += 1
-                if number_of_moves > 5000:
+                if number_of_moves > 10000:
                     draw = True
                     number_of_draws += 1
-                    if number_of_draws % 1 == 0:
-                        print(str(number_of_draws) + " draws")
                     break
             if draw:
                 self.p1.update_graphs_after_result(False)
@@ -163,12 +161,18 @@ class Game:
     def play_tournament(self):
 
         player1 = pd.read_pickle('player_one')
-        player2 = pd.read_pickle('player_two')
-        player_list = [player1, player2]
+        player2 = pd.read_pickle('./saves/player_one_lim')
+        player2.id = 2
+        player3 = UctPlayer(id=3)
+        player4 = pd.read_pickle('player_two')
+        player4.id = 4
+        player5 = pd.read_pickle('./saves/player_two_lim')
+        player5.id = 5
+        player_list = [player1, player2, player3, player4, player5]
         # TODO dodać graczy odpowiednich
         for player1 in player_list:
             for player2 in player_list:
-                if player1 != player2:
+                if player1 != player2 and player1.id < player2.id:
                     print("a")
                     self.start_game(player1, player2)
 

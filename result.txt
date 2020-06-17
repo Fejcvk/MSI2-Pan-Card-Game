@@ -1,0 +1,104 @@
+Game between player 1 and 2
+Player 1 wins: 32
+Player 2 wins: 46
+Number of draws: 22
+
+Game between player 1 and 3
+Player 1 wins: 44
+Player 3 wins: 39
+Number of draws: 17
+
+Game between player 1 and 4
+Player 1 wins: 37
+Player 4 wins: 44
+Number of draws: 19
+
+Game between player 1 and 5
+Player 1 wins: 39
+Player 5 wins: 44
+Number of draws: 17
+
+Game between player 2 and 1
+Player 2 wins: 2
+Player 1 wins: 2
+Number of draws: 96
+
+Game between player 2 and 3
+Player 2 wins: 5
+Player 3 wins: 0
+Number of draws: 95
+
+Game between player 2 and 4
+Player 2 wins: 3
+Player 4 wins: 0
+Number of draws: 97
+
+Game between player 2 and 5
+Player 2 wins: 3
+Player 5 wins: 0
+Number of draws: 97
+
+Game between player 3 and 1
+Player 3 wins: 2
+Player 1 wins: 4
+Number of draws: 94
+
+Game between player 3 and 2
+Player 3 wins: 4
+Player 2 wins: 0
+Number of draws: 96
+
+Game between player 3 and 4
+Player 3 wins: 2
+Player 4 wins: 0
+Number of draws: 98
+
+Game between player 3 and 5
+Player 3 wins: 2
+Player 5 wins: 0
+Number of draws: 98
+
+Game between player 4 and 1
+Player 4 wins: 2
+Player 1 wins: 3
+Number of draws: 95
+
+Game between player 4 and 2
+Player 4 wins: 2
+Player 2 wins: 0
+Number of draws: 98
+
+Game between player 4 and 3
+Player 4 wins: 4
+Player 3 wins: 0
+Number of draws: 96
+
+Game between player 4 and 5
+Player 4 wins: 2
+Player 5 wins: 0
+Number of draws: 98
+
+Game between player 5 and 1
+Player 5 wins: 1
+Player 1 wins: 1
+Number of draws: 98
+
+Game between player 5 and 2
+Player 5 wins: 0
+Player 2 wins: 0
+Number of draws: 100
+
+Game between player 5 and 3
+Player 5 wins: 4
+Player 3 wins: 0
+Number of draws: 96
+
+Game between player 5 and 4
+Player 5 wins: 6
+Player 4 wins: 0
+Number of draws: 94
+
+******* 10k remisow
+
+
+
